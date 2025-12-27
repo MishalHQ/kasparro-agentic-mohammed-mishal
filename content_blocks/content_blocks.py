@@ -4,9 +4,7 @@ Each block implements a specific content transformation strategy
 """
 from typing import Dict, Any, List
 from models.data_models import ProductModel
-from config import MODEL_NAME
-import os
-import openai
+from config import MODEL_NAME, get_openai_client
 
 
 class ContentBlockInterface:
@@ -23,7 +21,7 @@ class BenefitsBlock(ContentBlockInterface):
     """
     
     def __init__(self):
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def process(self, product: ProductModel, **kwargs) -> Dict[str, Any]:
         """Process benefits into structured content"""
@@ -65,7 +63,7 @@ class IngredientsBlock(ContentBlockInterface):
     """
     
     def __init__(self):
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def process(self, product: ProductModel, **kwargs) -> Dict[str, Any]:
         """Process ingredients into structured content"""
@@ -106,7 +104,7 @@ class UsageBlock(ContentBlockInterface):
     """
     
     def __init__(self):
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def process(self, product: ProductModel, **kwargs) -> Dict[str, Any]:
         """Process usage instructions into structured content"""
@@ -151,7 +149,7 @@ class SafetyBlock(ContentBlockInterface):
     """
     
     def __init__(self):
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def process(self, product: ProductModel, **kwargs) -> Dict[str, Any]:
         """Process safety information"""
@@ -194,7 +192,7 @@ class ComparisonBlock(ContentBlockInterface):
     """
     
     def __init__(self):
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def process(self, product: ProductModel, **kwargs) -> Dict[str, Any]:
         """Compare two products"""
