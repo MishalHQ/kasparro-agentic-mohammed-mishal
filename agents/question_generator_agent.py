@@ -6,6 +6,7 @@ from typing import Dict, Any, List
 import os
 from agents.base_agent import BaseAgent
 from models.data_models import AgentResult, ProductModel, Question
+from config import MODEL_NAME
 import openai
 
 
@@ -52,7 +53,7 @@ class QuestionGeneratorAgent(BaseAgent):
         prompt = self._build_prompt(product)
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are an expert at generating user questions for skincare products."},
                 {"role": "user", "content": prompt}
