@@ -3,11 +3,9 @@ QuestionGenerator Agent
 Responsibility: Generate categorized user questions from product data
 """
 from typing import Dict, Any, List
-import os
 from agents.base_agent import BaseAgent
 from models.data_models import AgentResult, ProductModel, Question
-from config import MODEL_NAME
-import openai
+from config import MODEL_NAME, get_openai_client
 
 
 class QuestionGeneratorAgent(BaseAgent):
@@ -28,7 +26,7 @@ class QuestionGeneratorAgent(BaseAgent):
     
     def __init__(self):
         super().__init__("QuestionGeneratorAgent")
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def execute(self, context: Dict[str, Any]) -> AgentResult:
         """
