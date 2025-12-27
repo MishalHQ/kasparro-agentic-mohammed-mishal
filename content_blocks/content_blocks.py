@@ -4,6 +4,7 @@ Each block implements a specific content transformation strategy
 """
 from typing import Dict, Any, List
 from models.data_models import ProductModel
+from config import MODEL_NAME
 import os
 import openai
 
@@ -46,7 +47,7 @@ Format as JSON:
 }}"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a skincare expert. Respond only with valid JSON."},
                 {"role": "user", "content": prompt}
@@ -81,13 +82,13 @@ Provide:
 
 Format as JSON:
 {{
-    "key_actives": [{{name": "...", "function": "...", "concentration": "..."}}],
+    "key_actives": [{{"name": "...", "function": "...", "concentration": "..."}}],
     "ingredient_synergy": "...",
     "notable_combinations": [...]
 }}"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a cosmetic chemist. Respond only with valid JSON."},
                 {"role": "user", "content": prompt}
@@ -132,7 +133,7 @@ Format as JSON:
 }}"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a skincare routine expert. Respond only with valid JSON."},
                 {"role": "user", "content": prompt}
@@ -175,7 +176,7 @@ Format as JSON:
 }}"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a dermatology safety expert. Respond only with valid JSON."},
                 {"role": "user", "content": prompt}
@@ -238,7 +239,7 @@ Format as JSON:
 }}"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a product comparison expert. Respond only with valid JSON."},
                 {"role": "user", "content": prompt}
@@ -278,7 +279,7 @@ Format as JSON:
 }}"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a product developer. Respond only with valid JSON."},
                 {"role": "user", "content": prompt}
