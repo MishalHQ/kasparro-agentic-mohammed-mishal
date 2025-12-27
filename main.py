@@ -27,11 +27,29 @@ def main():
     # Load environment variables
     load_dotenv()
     
-    # Check for API key
-    if not os.getenv('OPENAI_API_KEY'):
-        print("❌ ERROR: OPENAI_API_KEY not found in environment")
-        print("Please create a .env file with your OpenAI API key")
-        print("Example: OPENAI_API_KEY=sk-...")
+    # Import config to check which API is being used
+    try:
+        from config import USE_OPENROUTER, API_KEY
+        
+        # Validate API key exists
+        if not API_KEY:
+            if USE_OPENROUTER:
+                print("❌ ERROR: OPENROUTER_API_KEY not found in environment")
+                print("Please create a .env file with your OpenRouter API key")
+                print("Get a FREE key at: https://openrouter.ai/keys")
+                print("Example: OPENROUTER_API_KEY=sk-or-v1-...")
+            else:
+                print("❌ ERROR: OPENAI_API_KEY not found in environment")
+                print("Please create a .env file with your OpenAI API key")
+                print("Example: OPENAI_API_KEY=sk-...")
+            sys.exit(1)
+        
+        # Show which API is being used
+        api_name = "OpenRouter (FREE)" if USE_OPENROUTER else "OpenAI (PAID)"
+        print(f"\n🔑 Using API: {api_name}")
+        
+    except Exception as e:
+        print(f"❌ ERROR: Failed to load configuration: {e}")
         sys.exit(1)
     
     print("\n" + "="*60)
