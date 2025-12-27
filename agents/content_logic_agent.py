@@ -47,7 +47,10 @@ class ContentLogicAgent(BaseAgent):
                 raise ValueError(f"Unknown block type: {block_type}")
             
             block = self.blocks[block_type]
-            results[block_type] = block.process(product, **context)
+            
+            # Pass only additional kwargs, not the entire context
+            kwargs = {k: v for k, v in context.items() if k not in ['product', 'block_types']}
+            results[block_type] = block.process(product, **kwargs)
             print(f"  ✓ Applied {block_type} block")
         
         print(f"✓ {self.agent_name}: Applied {len(results)} content blocks")
