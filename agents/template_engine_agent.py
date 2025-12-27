@@ -8,6 +8,7 @@ import os
 from agents.base_agent import BaseAgent
 from models.data_models import AgentResult, ProductModel, Question
 from templates.template_schemas import TemplateRegistry, TemplateValidator
+from config import MODEL_NAME
 import openai
 
 
@@ -106,7 +107,7 @@ Question: {question.question}
 Provide a clear, concise, and helpful answer (2-3 sentences):"""
             
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model=MODEL_NAME,
                 messages=[
                     {"role": "system", "content": "You are a helpful skincare expert."},
                     {"role": "user", "content": prompt}
@@ -191,7 +192,7 @@ Benefits: {', '.join(product.benefits)}
 Tagline:"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a marketing copywriter."},
                 {"role": "user", "content": prompt}
@@ -213,7 +214,7 @@ Skin Types: {', '.join(product.skin_types)}
 Description:"""
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a product description writer."},
                 {"role": "user", "content": prompt}
