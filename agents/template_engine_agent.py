@@ -4,12 +4,10 @@ Responsibility: Fill templates with processed content
 """
 from typing import Dict, Any, List
 from datetime import datetime
-import os
 from agents.base_agent import BaseAgent
 from models.data_models import AgentResult, ProductModel, Question
 from templates.template_schemas import TemplateRegistry, TemplateValidator
-from config import MODEL_NAME
-import openai
+from config import MODEL_NAME, get_openai_client
 
 
 class TemplateEngineAgent(BaseAgent):
@@ -22,7 +20,7 @@ class TemplateEngineAgent(BaseAgent):
         super().__init__("TemplateEngineAgent")
         self.registry = TemplateRegistry()
         self.validator = TemplateValidator()
-        self.client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        self.client = get_openai_client()
     
     def execute(self, context: Dict[str, Any]) -> AgentResult:
         """
