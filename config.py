@@ -1,9 +1,10 @@
 """
 Centralized Configuration
-All agents must import MODEL_NAME and API configuration from this file
+All agents must import MODEL_NAME and get_openai_client from this file
 """
 import os
 from dotenv import load_dotenv
+import openai
 
 # Load environment variables
 load_dotenv()
@@ -34,3 +35,14 @@ DEFAULT_MAX_TOKENS = 500
 
 # Legacy support (for backward compatibility)
 OPENAI_API_KEY = API_KEY
+
+
+def get_openai_client():
+    """
+    Get configured OpenAI client (works with both OpenAI and OpenRouter)
+    All agents should use this function instead of creating their own client
+    """
+    return openai.OpenAI(
+        api_key=API_KEY,
+        base_url=API_BASE
+    )
