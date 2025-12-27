@@ -16,7 +16,7 @@ if USE_OPENROUTER:
     # OpenRouter Configuration (FREE)
     API_KEY = os.getenv('OPENROUTER_API_KEY')
     API_BASE = "https://openrouter.ai/api/v1"
-    MODEL_NAME = "google/gemini-flash-1.5-8b"  # Free model on OpenRouter
+    MODEL_NAME = "nvidia/nemotron-3-nano-30b-a3b:free"  # Free NVIDIA model on OpenRouter
     
     if not API_KEY:
         raise ValueError("OPENROUTER_API_KEY not found in environment variables. Get one free at https://openrouter.ai/keys")
