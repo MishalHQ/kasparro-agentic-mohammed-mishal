@@ -5,6 +5,7 @@ Runs the complete multi-agent content generation system
 import os
 import sys
 from dotenv import load_dotenv
+load_dotenv()
 from orchestrator.dag_orchestrator import DAGOrchestrator
 
 
