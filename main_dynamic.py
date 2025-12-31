@@ -105,18 +105,28 @@ def main():
         initial_state = {"raw_product_data": PRODUCT_DATA}
         final_state = orchestrator.execute(initial_state)
         
-        # Extract outputs
+        # Extract outputs from final state
+        # Each template agent stores its result with a unique key
         outputs = {}
         
-        # Get FAQ page
+        # Check fill_template results
         if 'fill_template' in final_state:
             template_result = final_state['fill_template']
+            
+            # Extract each page type
             if 'faq_page' in template_result:
                 outputs['faq'] = template_result['faq_page']
             if 'product_page' in template_result:
                 outputs['product_page'] = template_result['product_page']
             if 'comparison_page' in template_result:
                 outputs['comparison_page'] = template_result['comparison_page']
+        
+        # If outputs is empty, something went wrong
+        if not outputs:
+            print("\n⚠️  WARNING: No outputs found in final state")
+            print("Final state keys:", list(final_state.keys()))
+            if 'fill_template' in final_state:
+                print("fill_template keys:", list(final_state['fill_template'].keys()))
         
         # Save outputs
         print("\n" + "="*70)
@@ -126,14 +136,17 @@ def main():
         output_dir = "output"
         os.makedirs(output_dir, exist_ok=True)
         
-        for page_type, data in outputs.items():
-            filename = f"{page_type}.json"
-            filepath = os.path.join(output_dir, filename)
-            
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            
-            print(f"  ✓ Saved: {filepath}")
+        if outputs:
+            for page_type, data in outputs.items():
+                filename = f"{page_type}.json"
+                filepath = os.path.join(output_dir, filename)
+                
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                
+                print(f"  ✓ Saved: {filepath}")
+        else:
+            print("  ⚠️  No outputs to save")
         
         # Visualize execution
         orchestrator.visualize_execution()
