@@ -97,9 +97,20 @@ class DynamicOrchestrator:
                     
                     if result:
                         # Update shared state with results
+                        # IMPORTANT: Merge results instead of overwriting
                         for capability in agent.capabilities:
                             cap_key = capability.value
-                            self.shared_state[cap_key] = result
+                            
+                            # If capability key doesn't exist, create it
+                            if cap_key not in self.shared_state:
+                                self.shared_state[cap_key] = {}
+                            
+                            # Merge the result into existing capability data
+                            if isinstance(self.shared_state[cap_key], dict) and isinstance(result, dict):
+                                self.shared_state[cap_key].update(result)
+                            else:
+                                # If not dict, just store it
+                                self.shared_state[cap_key] = result
                         
                         executed_agents.add(agent_id)
                         executed_this_round.append(agent_id)
